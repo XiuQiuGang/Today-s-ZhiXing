@@ -1,4 +1,4 @@
-#!D:\Android\untitled\venv\Scripts\python.exe
+#!C:\Users\huzuj\Desktop\Today-s-ZhiXing\venv\Scripts\python.exe
 # EASY-INSTALL-ENTRY-SCRIPT: 'pip==19.0.3','console_scripts','pip'
 __requires__ = 'pip==19.0.3'
 import re
