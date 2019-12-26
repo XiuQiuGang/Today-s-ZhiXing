@@ -8,13 +8,13 @@ db = SQLAlchemy()
 
 
 class User(db.Model):
-    __table_name__ = 'users'
+    __tablename__ = 'user'
     user_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), nullable=False)
-    phoneNumber = db.Column(db.String(11), unique=True)
-    email = db.Column(db.String(50), unique=True)
-    studentID = db.Column(db.Integer, nullable=False, unique=True)
+    username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(50))
+    email = db.Column(db.String(50))
+    nick_name = db.Column(db.String(50))
+    profile = db.Column(db.String(100))
     intro = db.Column(db.Text)
     circle1 = db.Column(db.Integer)
     circle2 = db.Column(db.Integer)
@@ -22,7 +22,39 @@ class User(db.Model):
     circle4 = db.Column(db.Integer)
     circle5 = db.Column(db.Integer)
 
+    def __init__(self, username, password, email):
+        self.username = username
+        self.password = password
+        self.email = email
 
+    def update(self, nick_name, intro, profile, circle1, circle2, circle3, circle4, circle5):
+        self.nick_name = nick_name
+        self.intro = intro
+        self.profile = profile
+        self.circle1 = circle1
+        self.circle2 = circle2
+        self.circle3 = circle3
+        self.circle4 = circle4
+        self.circle5 = circle5
+
+
+class UserSchema(ma.Schema):
+    user_id = fields.Integer()
+    username = fields.String()
+    password = fields.String()
+    email = fields.String()
+    studentID = fields.Integer()
+    intro = fields.String()
+    nick_name = fields.String()
+    profile = fields.String()
+    circle1 = fields.Integer()
+    circle2 = fields.Integer()
+    circle3 = fields.Integer()
+    circle4 = fields.Integer()
+    circle5 = fields.Integer()
+
+
+'''
 class Circle(db.Model):
     __table_name__ = 'circle'
     circle_id = db.Column(db.Integer, primary_key=True)
@@ -78,4 +110,4 @@ class CreateCircle(db.Model):
     circle_id = db.Column(db.Integer, primary_key=True)
     circleName = db.Column(db.String(20))
     applyNumber = db.Column(db.Integer)
-
+'''

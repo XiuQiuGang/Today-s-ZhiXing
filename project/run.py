@@ -1,4 +1,5 @@
 from flask import Flask
+from my_model import db
 
 
 def create_app(config_filename):
@@ -8,7 +9,6 @@ def create_app(config_filename):
     from app import api_bp
     app.register_blueprint(api_bp)
 
-    from Model import db
     db.init_app(app)
 
     return app
