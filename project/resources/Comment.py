@@ -1,37 +1,27 @@
 from flask import jsonify, request
 from flask_restful import Resource
-from Model import db, Comment, Category, CommentSchema
+from my_model import db, Comment, CommentSchema
 
 comments_schema = CommentSchema(many=True)
 comment_schema = CommentSchema()
 
 
 class CommentResource(Resource):
-    def get(self):
-        comments = Comment.query.all()
-        comments = comments_schema.dump(comments).data
-        return {"status": "success", "data": comments}, 200
+    @staticmethod
+    def get():
+        post_id = request.args['post_id']
+        user = Comment.query.filter_by(post_id=post_id)
+        result = comments_schema.dump(user).data
+        return result, 200
 
-    def post(self):
-        json_data = request.get_json(force=True)
-        if not json_data:
-            return {'message': 'No input data provided'}, 400
-        # Validate and deserialize input
-        data, errors = comment_schema.load(json_data)
-        if errors:
-            return {"status": "error", "data": errors}, 422
-        category_id = Category.query.filter_by(id=data['category_id']).first()
-        if not category_id:
-            return {'status': 'error', 'message': 'comment category not found'}, 400
-        comment = Comment(
-            category_id=data['category_id'],
-            comment=data['comment']
-        )
+    @staticmethod
+    def post():
+        post_id = request.args['post_id']
+        user_id = request.args['user_id']
+        contend = request.args['contend']
+        comment = Comment(post_id, user_id, contend, 0)
         db.session.add(comment)
         db.session.commit()
 
         result = comment_schema.dump(comment).data
-
-        return {'status': "success", 'data': result}, 201
-
-    # You can add the other methods here...
+        return result, 200

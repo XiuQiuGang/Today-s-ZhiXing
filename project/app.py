@@ -7,6 +7,7 @@ from resources.User import Register, Login, GetUsers, UpdateUserInformation, Vie
 from resources.Image import Image
 from resources.Post import GetPosts, PostAction, GetPost, SearchUser, GetByCircle
 from resources.Circle import GetCircles, GetCircle, CreateCircle, SearchCircle
+from resources.Interact import LikePostResource, LikeCommentResource, Favourite
 
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
@@ -16,7 +17,6 @@ api = Api(api_bp)
 # Try
 api.add_resource(Hello, '/Hello')
 api.add_resource(CategoryResource, '/Category')
-api.add_resource(CommentResource, '/Comment')
 
 # User
 api.add_resource(Register, '/register')
@@ -40,3 +40,13 @@ api.add_resource(GetCircles, '/view_circles')
 api.add_resource(GetCircle, '/get_circle')
 api.add_resource(CreateCircle, '/create_circle')
 api.add_resource(SearchCircle, '/search_circle')
+
+# Comment
+api.add_resource(CommentResource, '/comment')
+
+# Interact
+api.add_resource(LikePostResource, '/like_post')
+api.add_resource(LikeCommentResource, '/like_comment')
+api.add_resource(Favourite, '/favorite')
+
+

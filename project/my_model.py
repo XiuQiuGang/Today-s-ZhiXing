@@ -77,7 +77,7 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
     circle_id = db.Column(db.Integer, db.ForeignKey('circle.circle_id'))
     postTime = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
-    contend = db.Column(db.String(100))
+    contend = db.Column(db.String(10000))
     img = db.Column(db.String(100))
     likes = db.Column(db.Integer)
     favorites = db.Column(db.Integer)
@@ -87,6 +87,14 @@ class Post(db.Model):
         self.circle_id = circle_id
         self.contend = contend
         self.img = img
+        self.likes = 0
+        self.favorites = 0
+
+    def like(self):
+        self.likes += 1
+
+    def favorite(self):
+        self.favorites += 1
 
 
 class PostSchema(ma.Schema):
@@ -99,27 +107,52 @@ class PostSchema(ma.Schema):
     favorites = fields.Integer()
 
 
-'''
-class Comments(db.Model):
-    post_id = db.Column(db.Integer, db.ForeignKey('posts.post_id'), primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True)
-    commentTime = db.Column(db.DateTime)
-    contend = db.Column(db.Text)
+class Comment(db.Model):
+    __tablename__ = 'comment'
+    Comment_id = db.Column(db.Integer, primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    commentTime = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
+    contend = db.Column(db.String(10000))
     likes = db.Column(db.Integer)
 
+    def __init__(self, post_id, user_id, contend, likes):
+        self.post_id = post_id
+        self.user_id = user_id
+        self.contend = contend
+        self.likes = likes
 
-class Favorites(db.Model):
-    post_id = db.Column(db.Integer, db.ForeignKey('posts.post_id'), primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True)
-    favouriteTime = db.Column(db.DateTime)
-
-
-class Likes(db.Model):
-    post_id = db.Column(db.Integer, db.ForeignKey('posts.post_id'), primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True)
-    likeTime = db.Column(db.DateTime)
+    def like(self):
+        self.likes += 1
 
 
+class CommentSchema(ma.Schema):
+    post_id = fields.Integer()
+    user_id = fields.Integer()
+    contend = fields.String()
+
+
+class Favorite(db.Model):
+    post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), primary_key=True)
+    favouriteTime = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
+
+    def __init__(self, post_id, user_id):
+        self.post_id = post_id
+        self.user_id = user_id
+
+
+class Like(db.Model):
+    post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), primary_key=True)
+    likeTime = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
+
+    def __init__(self, post_id, user_id):
+        self.post_id = post_id
+        self.user_id = user_id
+
+
+'''
 class Block(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('posts.post_id'), primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True)
