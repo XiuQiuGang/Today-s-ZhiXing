@@ -42,7 +42,7 @@ class UserSchema(ma.Schema):
     user_id = fields.Integer()
     username = fields.String()
     password = fields.String()
-    email = fields.String()
+    email = fields.Email()
     studentID = fields.Integer()
     intro = fields.String()
     nick_name = fields.String()
@@ -54,27 +54,52 @@ class UserSchema(ma.Schema):
     circle5 = fields.Integer()
 
 
-'''
 class Circle(db.Model):
-    __table_name__ = 'circle'
+    __tablename__ = 'circle'
     circle_id = db.Column(db.Integer, primary_key=True)
-    circleName = db.Column(db.String(20), unique=True)
-    peopleNumber = db.Column(db.Integer)
-    intro = db.Column(db.Text)
+    circle_name = db.Column(db.String(20), unique=True)
+    people_number = db.Column(db.Integer)
+
+    def __init__(self, circle_name, people_number):
+        self.circle_name = circle_name
+        self.people_number = people_number
 
 
-class Posts(db.Model):
-    __table_name__ = 'posts'
+class CircleSchema(ma.Schema):
+    circle_id = fields.Integer()
+    circle_name = fields.String()
+    people_number = fields.Integer()
+
+
+class Post(db.Model):
+    __tablename__ = 'post'
     post_id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
     circle_id = db.Column(db.Integer, db.ForeignKey('circle.circle_id'))
-    postTime = db.Column(db.DateTime)
-    contend = db.Column(db.Text)
+    postTime = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
+    contend = db.Column(db.String(100))
     img = db.Column(db.String(100))
     likes = db.Column(db.Integer)
     favorites = db.Column(db.Integer)
 
+    def __init__(self, user_id, circle_id, contend, img):
+        self.user_id = user_id
+        self.circle_id = circle_id
+        self.contend = contend
+        self.img = img
 
+
+class PostSchema(ma.Schema):
+    post_id = fields.Integer()
+    user_id = fields.Integer()
+    circle_id = fields.Integer()
+    contend = fields.String()
+    img = fields.String()
+    likes = fields.Integer()
+    favorites = fields.Integer()
+
+
+'''
 class Comments(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('posts.post_id'), primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True)
