@@ -216,20 +216,15 @@ class LikeSchema(ma.Schema):
     likeTime = fields.DateTime()
 
 
-'''
 class Block(db.Model):
-    post_id = db.Column(db.Integer, db.ForeignKey('posts.post_id'), primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), primary_key=True)
+
+    def __init__(self, post_id, user_id):
+        self.post_id = post_id
+        self.user_id = user_id
 
 
-class Report(db.Model):
-    post_id = db.Column(db.Integer, db.ForeignKey('posts.post_id'), primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), primary_key=True)
-    reason = db.Column(db.Text)
-
-
-class CreateCircle(db.Model):
-    circle_id = db.Column(db.Integer, primary_key=True)
-    circleName = db.Column(db.String(20))
-    applyNumber = db.Column(db.Integer)
-'''
+class BlockSchema(ma.Schema):
+    post_id = fields.Integer()
+    user_id = fields.Integer()

@@ -9,6 +9,7 @@ from resources.Post import GetPosts, PostAction, GetPost, SearchUser, GetByCircl
 from resources.Circle import GetCircles, GetCircle, CreateCircle, SearchCircle, QuitCircle
 from resources.Interact import LikePostResource, LikeCommentResource, Favourite
 from resources.View import ViewComment, ViewLike, ViewFavourite
+from resources.Block import BlockPost
 
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
@@ -56,4 +57,7 @@ api.add_resource(Favourite, '/favorite')
 api.add_resource(ViewComment, '/view_my_comment')
 api.add_resource(ViewLike, '/view_my_like')
 api.add_resource(ViewFavourite, '/view_my_favourite')
+
+# Block
+api.add_resource(BlockPost, '/block_post')
 
