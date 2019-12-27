@@ -1,6 +1,6 @@
 from flask import request
 from flask_restful import Resource
-from my_model import db, Post, PostSchema, User, Block, BlockSchema
+from ..my_model import db, Post, PostSchema, User, Block, BlockSchema
 
 posts_schema = PostSchema(many=True)
 post_schema = PostSchema()

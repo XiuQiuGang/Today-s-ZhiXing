@@ -1,15 +1,14 @@
 from flask import Blueprint
 from flask_restful import Api
-from resources.Hello import Hello
-from resources.Category import CategoryResource
-from resources.Comment import CommentResource
-from resources.User import Register, Login, GetUsers, UpdateUserInformation, ViewUserInfo
-from resources.Image import Image
-from resources.Post import GetPosts, PostAction, GetPost, SearchUser, GetByCircle, HistoryPost
-from resources.Circle import GetCircles, GetCircle, CreateCircle, SearchCircle, QuitCircle
-from resources.Interact import LikePostResource, LikeCommentResource, Favourite
-from resources.View import ViewComment, ViewLike, ViewFavourite
-from resources.Block import BlockPost
+from .resources.Hello import Hello
+from .resources.Comment import CommentResource
+from .resources.User import Register, Login, GetUsers, UpdateUserInformation, ViewUserInfo
+from .resources.Image import Image
+from .resources.Post import GetPosts, PostAction, GetPost, SearchUser, GetByCircle, HistoryPost
+from .resources.Circle import GetCircles, GetCircle, CreateCircle, SearchCircle, QuitCircle
+from .resources.Interact import LikePostResource, LikeCommentResource, Favourite
+from .resources.View import ViewComment, ViewLike, ViewFavourite
+from .resources.Block import BlockPost
 
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
@@ -18,7 +17,6 @@ api = Api(api_bp)
 
 # Try
 api.add_resource(Hello, '/Hello')
-api.add_resource(CategoryResource, '/Category')
 
 # User
 api.add_resource(Register, '/register')

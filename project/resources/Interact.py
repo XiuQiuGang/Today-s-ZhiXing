@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from flask_restful import Resource
-from my_model import db, Post, Comment, Like, Favorite, PostSchema, CommentSchema
+from ..my_model import db, Post, Comment, Like, Favorite, PostSchema, CommentSchema
 
 comment_schema = CommentSchema()
 post_schema = PostSchema()

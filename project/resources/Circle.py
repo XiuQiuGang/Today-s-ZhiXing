@@ -1,6 +1,6 @@
 from flask import request
 from flask_restful import Resource
-from my_model import db, Circle, CircleSchema, User
+from ..my_model import db, Circle, CircleSchema, User
 
 circles_schema = CircleSchema(many=True)
 circle_schema = CircleSchema()

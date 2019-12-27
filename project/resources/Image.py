@@ -1,6 +1,6 @@
 from flask import request, send_file
 from flask_restful import Resource
-from my_model import db, User, UserSchema
+from ..my_model import db, User, UserSchema
 import werkzeug
 import os
 from configparser import ConfigParser

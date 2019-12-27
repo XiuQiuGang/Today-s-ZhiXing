@@ -1,6 +1,6 @@
 from flask import request
 from flask_restful import Resource
-from my_model import db, User, UserSchema
+from ..my_model import db, User, UserSchema
 
 users_schema = UserSchema(many=True)
 user_schema = UserSchema()
