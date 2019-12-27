@@ -5,9 +5,10 @@ from resources.Category import CategoryResource
 from resources.Comment import CommentResource
 from resources.User import Register, Login, GetUsers, UpdateUserInformation, ViewUserInfo
 from resources.Image import Image
-from resources.Post import GetPosts, PostAction, GetPost, SearchUser, GetByCircle
-from resources.Circle import GetCircles, GetCircle, CreateCircle, SearchCircle
+from resources.Post import GetPosts, PostAction, GetPost, SearchUser, GetByCircle, HistoryPost
+from resources.Circle import GetCircles, GetCircle, CreateCircle, SearchCircle, QuitCircle
 from resources.Interact import LikePostResource, LikeCommentResource, Favourite
+from resources.View import ViewComment, ViewLike, ViewFavourite
 
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
@@ -34,12 +35,14 @@ api.add_resource(PostAction, '/post')
 api.add_resource(GetPost, '/get_post_info')
 api.add_resource(SearchUser, '/search_post')
 api.add_resource(GetByCircle, '/get_by_circle')
+api.add_resource(HistoryPost, '/history_post')
 
 # Circle
 api.add_resource(GetCircles, '/view_circles')
 api.add_resource(GetCircle, '/get_circle')
-api.add_resource(CreateCircle, '/create_circle')
+api.add_resource(CreateCircle, '/join_circle')
 api.add_resource(SearchCircle, '/search_circle')
+api.add_resource(QuitCircle, '/quit_circle')
 
 # Comment
 api.add_resource(CommentResource, '/comment')
@@ -49,4 +52,8 @@ api.add_resource(LikePostResource, '/like_post')
 api.add_resource(LikeCommentResource, '/like_comment')
 api.add_resource(Favourite, '/favorite')
 
+# View
+api.add_resource(ViewComment, '/view_my_comment')
+api.add_resource(ViewLike, '/view_my_like')
+api.add_resource(ViewFavourite, '/view_my_favourite')
 
