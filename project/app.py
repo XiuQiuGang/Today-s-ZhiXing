@@ -3,7 +3,7 @@ from flask_restful import Api
 from .resources.Hello import Hello
 from .resources.Comment import CommentResource
 from .resources.User import Register, Login, GetUsers, UpdateUserInformation, ViewUserInfo
-from .resources.Image import Image
+from .resources.Image import Image, Video
 from .resources.Post import GetPosts, PostAction, GetPost, SearchUser, GetByCircle, HistoryPost
 from .resources.Circle import GetCircles, GetCircle, CreateCircle, SearchCircle, QuitCircle
 from .resources.Interact import LikePostResource, LikeCommentResource, Favourite
@@ -27,6 +27,7 @@ api.add_resource(ViewUserInfo, '/view_user_info')
 
 # Image
 api.add_resource(Image, '/image')
+api.add_resource(Video, '/video')
 
 # Post
 api.add_resource(GetPosts, '/get_posts')
