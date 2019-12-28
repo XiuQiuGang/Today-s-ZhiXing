@@ -97,8 +97,7 @@ class UpdateUserInformation(Resource):
 
         result = user_schema.dump(user).data
         print(result)
-        user.update(data['nick_name'], data['intro'], data['profile'], data['circle1'],
-                    data['circle2'], data['circle3'], data['circle4'], data['circle5'])
+        user.update(data['nick_name'], data['intro'], data['profile'])
         db.session.commit()
         result = user_schema.dump(user).data
         return result, 200

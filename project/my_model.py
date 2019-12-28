@@ -27,15 +27,10 @@ class User(db.Model):
         self.password = password
         self.email = email
 
-    def update(self, nick_name, intro, profile, circle1, circle2, circle3, circle4, circle5):
+    def update(self, nick_name, intro, profile):
         self.nick_name = nick_name
         self.intro = intro
         self.profile = profile
-        self.circle1 = circle1
-        self.circle2 = circle2
-        self.circle3 = circle3
-        self.circle4 = circle4
-        self.circle5 = circle5
 
     def join(self, circle_id):
         if self.circle1 == -1:
