@@ -162,15 +162,17 @@ class Comment(db.Model):
     Comment_id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    comment_to = db.Column(db.Integer, db.ForeignKey('user.user_id'))
     commentTime = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
     contend = db.Column(db.String(10000))
     likes = db.Column(db.Integer)
 
-    def __init__(self, post_id, user_id, contend, likes):
+    def __init__(self, post_id, user_id, contend, likes, comment_to):
         self.post_id = post_id
         self.user_id = user_id
         self.contend = contend
         self.likes = likes
+        self.comment_to = comment_to
 
     def like(self):
         self.likes += 1
@@ -203,11 +205,13 @@ class FavoriteSchema(ma.Schema):
 class Like(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'), primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), primary_key=True)
+    like_to = db.Column(db.Integer, db.ForeignKey('user.user_id'))
     likeTime = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
 
-    def __init__(self, post_id, user_id):
+    def __init__(self, post_id, user_id, like_to):
         self.post_id = post_id
         self.user_id = user_id
+        self.like_to = like_to
 
 
 class LikeSchema(ma.Schema):

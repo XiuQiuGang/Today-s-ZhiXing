@@ -1,6 +1,7 @@
 from flask import Flask
 from .my_model import db
-
+from flask_script import Manager
+from flask_migrate import Migrate, MigrateCommand
 
 def create_app():
     app = Flask(__name__)
@@ -13,6 +14,12 @@ def create_app():
 
     return app
 
+def create_manage():
+    app = create_app()
+    migrate = Migrate(app, db)
+    manager = Manager(app)
+    manager.add_command('db', MigrateCommand)
+    return manager
 
 if __name__ == "__main__":
     app = create_app()

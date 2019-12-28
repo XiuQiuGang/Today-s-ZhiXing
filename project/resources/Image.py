@@ -32,6 +32,6 @@ class Image(Resource):
 
     @staticmethod
     def get():
-        file_name = request.form['file_name']
+        file_name = request.args['file_name']
         print(file_name, type(file_name))
         return send_file(os.path.join('static', file_name), as_attachment=True)

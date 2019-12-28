@@ -12,7 +12,7 @@ class ViewComment(Resource):
     @staticmethod
     def get():
         user_id = request.args['user_id']
-        comments = Comment.query.filter_by(user_id=user_id)
+        comments = Comment.query.filter_by(comment_to=user_id)
         comment = comments_schema.dump(comments).data
         return comment, 200
 
@@ -21,7 +21,7 @@ class ViewLike(Resource):
     @staticmethod
     def get():
         user_id = request.args['user_id']
-        likes = Like.query.filter_by(user_id=user_id)
+        likes = Like.query.filter_by(like_to=user_id)
         likes = likes_schema.dump(likes).data
         return likes, 200
 
