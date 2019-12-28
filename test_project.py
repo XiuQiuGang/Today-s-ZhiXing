@@ -185,9 +185,9 @@ def test_post(client):
 
             basedir = os.path.abspath(os.path.dirname(__file__))
             data = {}
-            data['image'] = (io.BytesIO(b"my file contents"), basedir+'/'+path)
+            data['image'] = (io.BytesIO(b"my file contents"), path)
             response = client.post(
-                '/image', data=data, content_type='multipart/form-data'
+                '/image', data=data,follow_redirects=True, content_type='multipart/form-data'
             )
             url = json.loads(response.data.decode())
             
