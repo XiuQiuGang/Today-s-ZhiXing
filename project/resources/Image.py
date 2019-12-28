@@ -28,7 +28,7 @@ class Image(Resource):
 
         with open(basedir+"/config.ini", 'w') as f:
             parser.write(f)
-        return file_name
+        return 'http://120.27.247.14/static/'+'file_name
 
     @staticmethod
     def get():
