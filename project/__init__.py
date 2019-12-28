@@ -4,7 +4,7 @@ from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder = './static')
     app.config.from_object(Config)
 
     from .app import api_bp
