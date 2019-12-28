@@ -126,15 +126,15 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
     circle_id = db.Column(db.Integer, db.ForeignKey('circle.circle_id'))
     postTime = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
-    contend = db.Column(db.String(10000))
+    content = db.Column(db.String(10000))
     img = db.Column(db.String(100))
     likes = db.Column(db.Integer)
     favorites = db.Column(db.Integer)
 
-    def __init__(self, user_id, circle_id, contend, img):
+    def __init__(self, user_id, circle_id, content, img):
         self.user_id = user_id
         self.circle_id = circle_id
-        self.contend = contend
+        self.content = content
         self.img = img
         self.likes = 0
         self.favorites = 0
@@ -150,7 +150,7 @@ class PostSchema(ma.Schema):
     post_id = fields.Integer()
     user_id = fields.Integer()
     circle_id = fields.Integer()
-    contend = fields.String()
+    content = fields.String()
     img = fields.String()
     likes = fields.Integer()
     favorites = fields.Integer()
@@ -164,13 +164,13 @@ class Comment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
     comment_to = db.Column(db.Integer, db.ForeignKey('user.user_id'))
     commentTime = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
-    contend = db.Column(db.String(10000))
+    content = db.Column(db.String(10000))
     likes = db.Column(db.Integer)
 
-    def __init__(self, post_id, user_id, contend, likes, comment_to):
+    def __init__(self, post_id, user_id, content, likes, comment_to):
         self.post_id = post_id
         self.user_id = user_id
-        self.contend = contend
+        self.content = content
         self.likes = likes
         self.comment_to = comment_to
 
@@ -181,7 +181,7 @@ class Comment(db.Model):
 class CommentSchema(ma.Schema):
     post_id = fields.Integer()
     user_id = fields.Integer()
-    contend = fields.String()
+    content = fields.String()
     commentTime = fields.DateTime()
     likes = fields.Integer()
 

@@ -20,11 +20,11 @@ class CommentResource(Resource):
     def post():
         post_id = request.args['post_id']
         user_id = request.args['user_id']
-        contend = request.args['contend']
+        content = request.args['content']
         post = Post.query.filter_by(post_id=post_id).first()
         post = post_schema.dump(post).data
 
-        comment = Comment(post_id, user_id, contend, 0, post['user_id'])
+        comment = Comment(post_id, user_id, content, 0, post['user_id'])
         db.session.add(comment)
         db.session.commit()
 

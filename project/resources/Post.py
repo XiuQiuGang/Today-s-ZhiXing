@@ -50,7 +50,7 @@ class SearchUser(Resource):
     @staticmethod
     def get():
         key = request.args['key']
-        post = Post.query.filter(Post.contend.ilike('%' + key + '%'))
+        post = Post.query.filter(Post.content.ilike('%' + key + '%'))
         result = posts_schema.dump(post).data
         return result, 200
 
@@ -64,7 +64,7 @@ class PostAction(Resource):
         if not user:
             return {'message': 'The User does not exist'}, 200
 
-        post = Post(request.form['user_id'], request.form['circle_id'], request.form['contend'],
+        post = Post(request.form['user_id'], request.form['circle_id'], request.form['content'],
                     request.form['img'])
         db.session.add(post)
         db.session.commit()
