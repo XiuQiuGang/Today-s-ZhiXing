@@ -36,13 +36,18 @@ class CreateCircle(Resource):
         if not circle:
             circle = Circle(circle_name, 1)
             db.session.add(circle)
+            db.session.commit()
+            
+            result = circle_schema.dump(circle).data
+            return {'status': 0, 'result': result}, 200
+
         circle.add()
         circle = circle_schema.dump(circle).data
+        print(circle)
         if not user.check(circle['circle_id']):
             return {'status': 1, 'message': 'The user has joined this circle!'}
         if not user.join(circle['circle_id']):
             return {'status': 2, 'message': 'The user has joined 5 circle!'}
-
         db.session.commit()
         result = circle_schema.dump(circle).data
         return {'status': 0, 'result': result}, 200

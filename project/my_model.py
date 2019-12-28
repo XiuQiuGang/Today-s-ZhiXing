@@ -31,6 +31,11 @@ class User(db.Model):
         self.nick_name = nick_name
         self.intro = intro
         self.profile = profile
+        self.circle1 = -1
+        self.circle2 = -1
+        self.circle3 = -1
+        self.circle4 = -1
+        self.circle5 = -1
 
     def join(self, circle_id):
         if self.circle1 == -1:

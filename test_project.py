@@ -189,7 +189,7 @@ def test_post(client):
             response = client.post(
                 '/image', data=data, content_type='multipart/form-data'
             )
-            url = response.data.decode()
+            url = json.loads(response.data.decode())
             
             data = {
                 "img": url,
@@ -209,8 +209,112 @@ def test_post(client):
 def test_history_post(client):
     
     response = client.get(
-        '/history_post?user_id=2',
+        '/history_post?user_id=1',
         data={}
     )
     assert response.status_code == 200
 
+
+def test_comment(client):
+    response = client.post(
+        '/comment?post_id=1&user_id=1&content=hA'
+    )
+    data = json.loads(response.data.decode())
+    assert response.status_code == 200
+
+    response = client.post(
+        '/comment?post_id=1&user_id=2&content=emmmm'
+    )
+    data = json.loads(response.data.decode())
+    assert response.status_code == 200
+
+
+def test_view_comment(client):
+    response = client.get(
+        '/comment?post_id=1'
+    )
+    data = json.loads(response.data.decode())
+    assert response.status_code == 200
+    print(data)
+    assert len(data) == 2
+
+
+def test_like(client):
+    response = client.post(
+        '/like_post?post_id=1&user_id=1'
+    )
+    data = json.loads(response.data.decode())
+    assert response.status_code == 200
+    print(data)
+
+    response = client.post(
+        '/like_post?post_id=1&user_id=1'
+    )
+    data = json.loads(response.data.decode())
+    assert response.status_code == 200
+    print(data)
+
+    response = client.post(
+        '/like_post?post_id=1&user_id=2'
+    )
+    data = json.loads(response.data.decode())
+    assert response.status_code == 200
+    print(data)
+
+
+def test_favorite(client):
+    response = client.post(
+        '/favorite?post_id=1&user_id=1'
+    )
+    data = json.loads(response.data.decode())
+    assert response.status_code == 200
+    print(data)
+
+    response = client.post(
+        '/favorite?post_id=1&user_id=1'
+    )
+    data = json.loads(response.data.decode())
+    assert response.status_code == 200
+    assert 'message' in data
+
+    response = client.post(
+        '/favorite?post_id=1&user_id=2'
+    )
+    data = json.loads(response.data.decode())
+    assert response.status_code == 200
+    print(data)
+
+
+def test_get_by_circle(client):
+    response = client.get(
+        '/get_by_circle?circle_id=1&user_id=2&start=1&end=5'
+    )
+    data = json.loads(response.data.decode())
+    print(data[0])
+    assert response.status_code == 200
+    assert len(data) == 5
+    assert data[0]['likes'] == 2
+
+
+def test_join_circle(client):
+    response = client.post(
+        '/join_circle?circle_name=魔方&user_id=1'
+    )
+    data = json.loads(response.data.decode())
+    assert response.status_code == 200
+
+    response = client.post(
+        '/join_circle?circle_name=学习&user_id=1'
+    )
+    data = json.loads(response.data.decode())
+    print(data)
+    assert response.status_code == 200
+
+
+def test_view_circles(client):
+    response = client.get(
+        '/view_circles'
+    )
+    data = json.loads(response.data.decode())
+    assert response.status_code == 200
+    assert len(data) == 2

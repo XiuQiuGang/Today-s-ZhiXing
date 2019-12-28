@@ -12,6 +12,10 @@ class LikePostResource(Resource):
         post_id = request.args['post_id']
         user_id = request.args['user_id']
         
+        like = Like.query.filter_by(post_id=post_id, user_id=user_id).first()
+        if like:
+            return {"message": "has liked"}, 200
+
         post = Post.query.filter_by(post_id=post_id).first()
         post.like()
         result = post_schema.dump(post).data
@@ -40,6 +44,11 @@ class Favourite(Resource):
     def post():
         post_id = request.args['post_id']
         user_id = request.args['user_id']
+
+        favorite = Favorite.query.filter_by(post_id=post_id, user_id=user_id).first()
+        if favorite:
+            return {"message": "has favorite"}, 200
+
         favorite = Favorite(post_id, user_id)
         db.session.add(favorite)
 
