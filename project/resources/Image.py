@@ -16,15 +16,17 @@ class Image(Resource):
         s = image_file.filename
         the_format = s.split('.')[1]
         parser = ConfigParser()
-        parser.read('config.ini')
+        basedir = os.path.abspath(os.path.dirname(__file__))
+        print(basedir)
+        parser.read(basedir+'/config.ini')
         image_nums = parser.get('data', 'image_nums')
         file_name = image_nums + '.' + the_format
-        image_file.save(os.path.join('static', file_name))
+        image_file.save(os.path.join(basedir, 'static', file_name))
 
         parser.set('data', 'image_nums', str(int(image_nums) + 1))
         print(parser.get('data', 'image_nums'))
 
-        with open("config.ini", 'w') as f:
+        with open(basedir+"/config.ini", 'w') as f:
             parser.write(f)
         return file_name
 
