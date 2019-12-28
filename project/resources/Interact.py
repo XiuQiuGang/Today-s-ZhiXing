@@ -15,9 +15,8 @@ class LikePostResource(Resource):
         post = Post.query.filter_by(post_id=post_id).first()
         post.like()
         result = post_schema.dump(post).data
-        result.user_id
 
-        like = Like(post_id, user_id, result.user_id)
+        like = Like(post_id, user_id, result['user_id'])
         db.session.add(like)
         db.session.commit()
 
