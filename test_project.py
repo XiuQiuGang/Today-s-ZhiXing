@@ -105,7 +105,7 @@ def test_modify_information(client):
 
 def test_login(client):
     
-    response = client.get(
+    response = client.post(
         '/login',
         data=json.dumps(dict(
             username='huzujun',
@@ -118,7 +118,7 @@ def test_login(client):
     assert 0 == data['status_code']    
     assert 1 == data['user_id'] 
 
-    response = client.get(
+    response = client.post(
         '/login',
         data=json.dumps(dict(
             username='gang',
@@ -131,7 +131,7 @@ def test_login(client):
     assert 1 == data['status_code']    
     assert 2 == data['user_id']      
 
-    response = client.get(
+    response = client.post(
         '/login',
         data=json.dumps(dict(
             username='huzu',
@@ -142,7 +142,7 @@ def test_login(client):
     data = json.loads(response.data.decode())
     assert 2 == data['status_code'] 
 
-    response = client.get(
+    response = client.post(
         '/login',
         data=json.dumps(dict(
             username='huzujun',

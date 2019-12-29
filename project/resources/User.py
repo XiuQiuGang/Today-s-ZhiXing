@@ -58,7 +58,7 @@ class Register(Resource):
 
 class Login(Resource):
     @staticmethod
-    def get():
+    def post():
         json_data = request.get_json(force=True)
         if not json_data:
             return {'message': 'No input data provided'}, 400
