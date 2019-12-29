@@ -1,4 +1,5 @@
 gunicorn
+requests
 gevent
 alembic==1.3.2
 aniso8601==8.0.0

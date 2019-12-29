@@ -24,7 +24,7 @@ class ViewUserInfo(Resource):
 
 class Confirm(Resource):
     @staticmethod
-    def post():
+    def get():
         
         username = request.args['username']
         password = request.args['password']
