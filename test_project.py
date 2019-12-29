@@ -182,12 +182,13 @@ def test_post(client):
             else:
                 path = "some_posts/blog-author.jpg"
 
-
-            basedir = os.path.abspath(os.path.dirname(__file__))
-            data = {}
-            data['image'] = (io.BytesIO(b"my file contents"), path)
+            #basedir = os.path.abspath(os.path.dirname(__file__))
+            with open(path, 'rb') as img1:
+                img1StringIO = io.BytesIO(img1.read())
+            data = dict(image=(img1StringIO, path))
             response = client.post(
-                '/image', data=data,follow_redirects=True, content_type='multipart/form-data'
+                '/image', data=data,
+                follow_redirects=True
             )
             url = json.loads(response.data.decode())
             
