@@ -27,62 +27,32 @@ def test_ping(client):
 def test_register(client):
     
     response = client.post(
-        '/register',
-        data=json.dumps(dict(
-            username='huzujun',
-	        password='1234',
-            email='17301095@bjtu.edu.cn'
-        )),
-        content_type='application/json',
+        '/confirm?username=huzuj&password=1234&email=17301094@bjtu.edu.cn',
     )
     data = json.loads(response.data.decode())
     assert response.status_code == 200
     assert 0 == data['status_code']    
 
     response = client.post(
-        '/register',
-        data=json.dumps(dict(
-            username='huzujun',
-	        password='1234',
-            email='17301095@bjtu.edu.cn'
-        )),
-        content_type='application/json',
+        '/confirm?username=huzuj&password=1234&email=17301094@bjtu.edu.cn'
     )
     data = json.loads(response.data.decode())
     assert 1 == data['status_code'] 
 
     response = client.post(
-        '/register',
-        data=json.dumps(dict(
-            username='abc',
-	        password='1234',
-            email='17301095@bjtu.edu.cn'
-        )),
-        content_type='application/json',
+        '/confirm?username=abc&password=1234&email=17301094@bjtu.edu.cn'
     )
     data = json.loads(response.data.decode())
     assert 2 == data['status_code']          
     
     response = client.post(
-        '/register',
-        data=json.dumps(dict(
-            username='abc',
-	        password='1234',
-            email='17301095@163.com'
-        )),
-        content_type='application/json',
+        '/confirm?username=gang&password=1234&email=17301096@163.com'
     )
     data = json.loads(response.data.decode())
     assert 3 == data['status_code']    
 
     response = client.post(
-        '/register',
-        data=json.dumps(dict(
-            username='gang',
-	        password='1234',
-            email='17301094@bjtu.edu.cn'
-        )),
-        content_type='application/json',
+        '/confirm?username=gang&password=1234&email=17301096@bjtu.edu.cn'
     )
     data = json.loads(response.data.decode())
     assert 0 == data['status_code']    
@@ -108,7 +78,7 @@ def test_login(client):
     response = client.get(
         '/login',
         data=json.dumps(dict(
-            username='huzujun',
+            username='huzuj',
 	        password='1234'
         )),
         content_type='application/json',
@@ -145,7 +115,7 @@ def test_login(client):
     response = client.get(
         '/login',
         data=json.dumps(dict(
-            username='huzujun',
+            username='huzuj',
 	        password='12345'
         )),
         content_type='application/json',
