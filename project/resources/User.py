@@ -22,49 +22,6 @@ class ViewUserInfo(Resource):
         result = user_schema.dump(user).data
         return result, 200
 
-class Confirm(Resource):
-    @staticmethod
-    def get():
-        
-        username = request.args['username']
-        password = request.args['password']
-        email = request.args['email']
-
-        user = User.query.filter_by(username=username).first()
-        if user:
-            return {'status_code': 1}, 200
-
-        user = User.query.filter_by(email=email).first()
-        if user:
-            return {'status_code': 2}, 200
-
-        # print(data['email'].split('@')[1])
-        if email.split('@')[1] != 'bjtu.edu.cn':
-            return {'status_code': 3}, 200
-            
-        user = User(
-            username=username,
-            password=password,
-            email=email
-        )
-        db.session.add(user)
-        db.session.commit()
-
-        return {'status_code': 0}, 200
-
-def send_simple_message(username, password, email):
-    email = "17301095@bjtu.edu.cn"
-    data = {"from": "Mailgun Sandbox <postmaster@sandboxf7cf6ebd5b05494787b251699f4257b8.mailgun.org>",
-            "to": "{} <{}>".format(username, email),
-            "subject": "Hello {}".format(username),
-            "text": "Please click this link to finish register: http://120.27.247.14/confirm?username={}&password={}&email={}".format(username, password, email)}
-    print(data)
-    return requests.post(
-        "https://api.mailgun.net/v3/sandboxf7cf6ebd5b05494787b251699f4257b8.mailgun.org/messages",
-        auth=("api", "82694d733d986be6456e0efe6a0567ef-a9919d1f-eca3f395"),
-        data=data)
-
-
 class Register(Resource):
     @staticmethod
     def post():
@@ -87,10 +44,15 @@ class Register(Resource):
         # print(data['email'].split('@')[1])
         if data['email'].split('@')[1] != 'bjtu.edu.cn':
             return {'status_code': 3}, 200
-        send_simple_message(username=json_data['username'],
-            password=json_data['password'],
-            email=json_data['email']
-            )
+
+        user = User(
+            username=data['username'],
+            password=data['password'],
+            email=data['email']
+        )
+        db.session.add(user)
+        db.session.commit()
+
         return {'status_code': 0}, 200
 
 

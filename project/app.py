@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask_restful import Api
 from .resources.Hello import Hello
 from .resources.Comment import CommentResource
-from .resources.User import Register, Login, GetUsers, UpdateUserInformation, ViewUserInfo, Confirm
+from .resources.User import Register, Login, GetUsers, UpdateUserInformation, ViewUserInfo
 from .resources.Image import Image, Video
 from .resources.Post import GetPosts, PostAction, GetPost, SearchUser, GetByCircle, HistoryPost
 from .resources.Circle import GetCircles, GetCircle, CreateCircle, SearchCircle, QuitCircle
@@ -24,7 +24,6 @@ api.add_resource(Login, '/login')
 api.add_resource(GetUsers, '/getUsers')
 api.add_resource(UpdateUserInformation, '/edit_user_info')
 api.add_resource(ViewUserInfo, '/view_user_info')
-api.add_resource(Confirm, '/confirm')
 
 # Image
 api.add_resource(Image, '/image')
