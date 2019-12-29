@@ -319,3 +319,19 @@ def test_view_circles(client):
     data = json.loads(response.data.decode())
     assert response.status_code == 200
     assert len(data) == 2
+
+
+def test_view_circles(client):
+    response = client.post(
+        '/block_post?post_id=1&user_id=1'
+    )
+    data = json.loads(response.data.decode())
+    assert response.status_code == 200
+
+    response = client.get(
+        '/get_by_circle?circle_id=1&user_id=1&start=1&end=5'
+    )
+    data = json.loads(response.data.decode())
+    print(data[0])
+    assert data[0]['post_id'] != 1
+    assert response.status_code == 200
